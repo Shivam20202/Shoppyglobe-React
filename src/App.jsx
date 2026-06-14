@@ -1,14 +1,13 @@
-import React from 'react'
-import Header from './components/Header'
+import { Provider } from "react-redux";
+import { RouterProvider } from "react-router-dom";
 
-function App() {
+import { store } from "./redux/store";
+import { router } from "./app/router";
+
+export default function App() {
   return (
-    <>
-    <div className="text-3xl font-bold underline text-red-200">App</div>
-    <Header/>
-    
-  </>
-  )
+    <Provider store={store}>
+      <RouterProvider router={router} />
+    </Provider>
+  );
 }
-
-export default App
