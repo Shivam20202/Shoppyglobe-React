@@ -3,6 +3,8 @@
 A modern and responsive e-commerce application built with **React + Vite + Tailwind CSS**, using **Redux Toolkit** for state management and **React Router (createBrowserRouter)** for dynamic routing. The application features lazy-loaded routes, cart persistence with localStorage, toast notifications, and a clean modular architecture.
 
 > 🔗 **GitHub Repository:** (https://github.com/Shivam20202/Shoppyglobe-React) 
+
+
   🔗 **Deployed Link:** (https://react-shoppyglobe.vercel.app/)
 ---
 
