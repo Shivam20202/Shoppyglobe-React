@@ -1,15 +1,38 @@
 // Cart slice: manages cart items state via Redux Toolkit
+// Persists cart to localStorage so it survives page reloads.
 import { createSlice } from "@reduxjs/toolkit";
 
+const STORAGE_KEY = "shoppyglobe_cart_v1";
+
+function loadFromStorage() {
+  if (typeof window === "undefined") return [];
+  try {
+    const raw = window.localStorage.getItem(STORAGE_KEY);
+    if (!raw) return [];
+    const parsed = JSON.parse(raw);
+    return Array.isArray(parsed) ? parsed : [];
+  } catch {
+    return [];
+  }
+}
+
+function saveToStorage(items) {
+  if (typeof window === "undefined") return;
+  try {
+    window.localStorage.setItem(STORAGE_KEY, JSON.stringify(items));
+  } catch {
+    /* ignore quota / serialization errors */
+  }
+}
+
 const initialState = {
-  items: [], // { id, title, price, thumbnail, quantity }
+  items: loadFromStorage(), // { id, title, price, thumbnail, quantity }
 };
 
 const cartSlice = createSlice({
   name: "cart",
   initialState,
   reducers: {
-    // Add a product to the cart, or increment quantity if it already exists
     addToCart: (state, action) => {
       const product = action.payload;
       const existing = state.items.find((i) => i.id === product.id);
@@ -24,24 +47,25 @@ const cartSlice = createSlice({
           quantity: 1,
         });
       }
+      saveToStorage(state.items);
     },
-    // Remove a product entirely from the cart
     removeFromCart: (state, action) => {
       state.items = state.items.filter((i) => i.id !== action.payload);
+      saveToStorage(state.items);
     },
-    // Increment quantity by 1
     increaseQuantity: (state, action) => {
       const item = state.items.find((i) => i.id === action.payload);
       if (item) item.quantity += 1;
+      saveToStorage(state.items);
     },
-    // Decrement quantity, but never below 1 (per assignment spec)
     decreaseQuantity: (state, action) => {
       const item = state.items.find((i) => i.id === action.payload);
       if (item && item.quantity > 1) item.quantity -= 1;
+      saveToStorage(state.items);
     },
-    // Clear the cart after checkout
     clearCart: (state) => {
       state.items = [];
+      saveToStorage(state.items);
     },
   },
 });
@@ -54,7 +78,6 @@ export const {
   clearCart,
 } = cartSlice.actions;
 
-// Selectors
 export const selectCartItems = (state) => state.cart.items;
 export const selectCartCount = (state) =>
   state.cart.items.reduce((sum, i) => sum + i.quantity, 0);
