@@ -3,13 +3,18 @@ import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { ShoppingCart, Star } from "lucide-react";
 import { addToCart } from "../redux/cartSlice";
+import { toast } from "sonner";
 
 export default function ProductItem({ product }) {
   const dispatch = useDispatch();
 
   const handleAdd = (e) => {
     e.preventDefault();
+     e.stopPropagation();
     dispatch(addToCart(product));
+     toast.success("Added to cart", {
+      description: product.title,
+    });
   };
 
   return (

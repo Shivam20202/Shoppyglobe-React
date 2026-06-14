@@ -4,6 +4,7 @@ import { useParams, useNavigate, Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { ArrowLeft, ShoppingCart, Star } from "lucide-react";
 import { addToCart } from "../redux/cartSlice";
+import { toast } from "sonner";
 
 export default function ProductDetail() {
   const { id } = useParams();
@@ -79,6 +80,7 @@ export default function ProductDetail() {
 
   const handleAdd = () => {
     dispatch(addToCart(product));
+    toast.success("Added to cart", { description: product.title });
     navigate("/cart");
   };
 
