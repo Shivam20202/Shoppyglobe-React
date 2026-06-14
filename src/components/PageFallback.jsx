@@ -1,3 +1,5 @@
+// Loading spinner displayed while lazy-loaded components are being fetched
+
 export default function PageFallback() {
   return (
     <div className="flex min-h-[50vh] items-center justify-center">
