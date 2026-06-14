@@ -4,8 +4,8 @@ A modern and responsive e-commerce application built with **React + Vite + Tailw
 
 > 🔗 **GitHub Repository:** (https://github.com/Shivam20202/Shoppyglobe-React) 
 
-
-  🔗 **Deployed Link:** (https://react-shoppyglobe.vercel.app/)
+  🔗 **Deployed Link:**  (https://react-shoppyglobe.vercel.app/)
+  
 ---
 
 # ✨ Features
